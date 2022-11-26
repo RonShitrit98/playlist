@@ -1,12 +1,9 @@
 <template>
   <section class="auth-view">
-    <signUp />
+    <router-view />
   </section>
 </template>
 
 <script>
-import signUp from "../components/sign-up.vue";
-export default {
-  components: { signUp },
-};
+export default {};
 </script>

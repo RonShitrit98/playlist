@@ -4,7 +4,6 @@ const qs = require("qs");
 // const logger = require("../../services/logger.service");
 
 async function getOauthToken(code) {
-  console.log("getting token");
   const rootURl = "https://oauth2.googleapis.com/token";
   const options = {
     code,
