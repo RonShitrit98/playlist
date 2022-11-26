@@ -44,6 +44,6 @@ function getEmptyUser() {
   return {
     fullname: "",
     password: "",
-    username: "",
+    email: "",
   };
 }
