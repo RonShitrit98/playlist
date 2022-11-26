@@ -3,16 +3,20 @@ import { userService } from "../services/user-service";
 export const useUserStore = defineStore("user", {
   state: () => {
     return {
-      currUser: null,
+      user: null,
       userToDisplay: null,
     };
   },
-  getters: {},
+  getters: {
+    currUser() {
+      return this.user;
+    },
+  },
   actions: {
     async signup(user) {
       try {
         const newUser = await userService.signup(user);
-        this.currUser = newUser;
+        this.user = newUser;
       } catch (error) {
         console.log(error);
       }
@@ -24,7 +28,7 @@ export const useUserStore = defineStore("user", {
     async loadUser() {
       try {
         const user = await userService.loadUser();
-        this.currUser = user;
+        this.user = user;
       } catch (error) {
         console.log(error);
       }
@@ -37,9 +41,9 @@ export const useUserStore = defineStore("user", {
         console.log(error);
       }
     },
-    async logout(){
-      this.currUser = null
-      await userService.logout()
-    }
+    async logout() {
+      this.user = null;
+      await userService.logout();
+    },
   },
 });
