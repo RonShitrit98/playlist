@@ -1,0 +1,18 @@
+.main-header{
+    background-color: white;
+    border-top-right-radius:inherit,;
+    border-top-left-radius:inherit;
+    height: 70px;
+    box-shadow: 0px 5px 4px -7px rgba(0,0,0,0.28);
+    padding: 0px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .main-logo{
+        font-family: norican;
+        color: $mainClr;
+        font-size: rem(44px);
+        font-weight:500;
+    }
+}
