@@ -4,6 +4,7 @@
       @checkUsername="checkUsername"
       :isUsernameTaken="isUsernameTaken"
       @auth="auth"
+      :user="user"
     />
   </section>
 </template>
@@ -29,10 +30,15 @@ export default {
         console.log(error);
       }
     },
-    async auth(type, user) {
+    async auth(type, user = '') {
       try {
         await this.userStore[type](user);
       } catch (error) {}
+    },
+  },
+  computed: {
+    user() {
+      return this.userStore.currUser;
     },
   },
 };
