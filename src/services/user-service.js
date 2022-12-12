@@ -7,8 +7,8 @@ export const userService = {
   findUserById,
   logout,
   getEmptyUser,
+  checkUsername,
 };
-
 
 async function signup(user) {
   try {
@@ -39,8 +39,21 @@ async function logout() {
 
 function getEmptyUser() {
   return {
+    username: "",
     fullname: "",
     password: "",
     email: "",
+    imgUrl: "",
+    media: {
+      movies: [],
+      music: [],
+    },
+    type: "email",
+    isActivated: false,
   };
+}
+
+function checkUsername(username) {
+  console.log(username)
+  return httpService.get(`user/check/${username}`);
 }

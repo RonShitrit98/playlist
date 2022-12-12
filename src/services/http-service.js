@@ -3,7 +3,6 @@ import router from '@/router';
 
 const BASE_URL =
   process.env.NODE_ENV === "production" ? "/api/" : "http://127.0.0.1:3030/api/";
-
 var axios = Axios.create({
   withCredentials: true,
 });
@@ -30,7 +29,6 @@ async function ajax(endpoint, method = "GET", data = null) {
       method,
       data,
       params: method === "GET" ? data : null,
-      // withCredentials: true,
     });
     return res.data;
   } catch (err) {
