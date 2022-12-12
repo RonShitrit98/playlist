@@ -31,10 +31,7 @@ export default {
     },
     async auth(type, user) {
       try {
-        if (type === "signup") {
-          console.log(user)
-          await this.userStore.signup(user);
-        }
+        await this.userStore[type](user);
       } catch (error) {}
     },
   },

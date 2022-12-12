@@ -27,8 +27,8 @@
 </template>
 
 <script>
-import { userService } from "../services/user-service";
-import { getGoogleUrl } from "../services/google-service";
+import { userService } from "../../services/user-service";
+import { getGoogleUrl } from "../../services/google-service";
 export default {
   props: {
     isUsernameTaken: {

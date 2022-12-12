@@ -4,8 +4,11 @@
     <nav class="main-nav">
       <router-link to="/">Home</router-link>
       <router-link to="/about">About</router-link>
-      <router-link v-if="!user" to="/auth/signup">Signup</router-link>
-      <img v-else :src="user.imgUrl" @click="toggleUserModal" />
+      <router-link v-if="!user" to="/auth/signup">Sign up</router-link>
+      <router-link v-if="!user" to="/auth/login">Log in</router-link>
+      <button v-else @click="toggleUserModal">
+        <img :src="user.imgUrl" />
+      </button>
     </nav>
 
     <div v-if="isUserModal && this.user" class="user-modal">
