@@ -18,3 +18,7 @@
   letter-spacing: rem(5px);
   font-size: rem(16px);
 }
+
+@mixin profile-img {
+  border-radius: 50%;
+}

@@ -2,7 +2,7 @@
 @import "./setup/functions";
 @import "setup/typography";
 @import "setup/variables";
-@import "setup/_mixins";
+@import "setup/mixins";
 
 // BASICS
 @import "basic/base";
@@ -12,3 +12,6 @@
 
 // COMPONENTS
 @import 'components/main-header';
+
+//PROFILE
+@import 'components/profile/profile-title';
