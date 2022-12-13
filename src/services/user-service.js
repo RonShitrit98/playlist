@@ -8,6 +8,7 @@ export const userService = {
   logout,
   getEmptyUser,
   checkUsername,
+  saveUser
 };
 
 async function signup(user) {
@@ -54,6 +55,14 @@ function getEmptyUser() {
 }
 
 function checkUsername(username) {
-  console.log(username)
+  console.log(username);
   return httpService.get(`user/check/${username}`);
+}
+
+function saveUser(user) {
+  try {
+    return httpService.put(`user/${user._id}`, user);
+  } catch (error) {
+    console.log(error);
+  }
 }

@@ -6,6 +6,8 @@
       type="file"
       accept="image/png, image/jpeg"
     />
+    <button @click="saveImg">Save</button>
+    <button @click="cancelEdit">Cancel</button>
   </section>
 </template>
 
@@ -27,6 +29,16 @@ export default {
     async uploadImg(ev) {
       const url = await imgService.uploadImg(ev.target.files);
       this.currImg = url;
+    },
+    saveImg() {
+      this.$emit("save", "imgUrl", this.currImg);
+      this.closeModal();
+    },
+    cancelEdit() {
+      this.closeModal();
+    },
+    closeModal() {
+      this.$emit("close");
     },
   },
 };

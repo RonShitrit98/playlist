@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { userService } from "../services/user-service";
+import { utilService } from "../services/util-service";
 export const useUserStore = defineStore("user", {
   state: () => {
     return {
@@ -9,7 +10,7 @@ export const useUserStore = defineStore("user", {
   },
   getters: {
     currUser() {
-      return this.user;
+      return utilService.copyItem(this.user);
     },
   },
   actions: {
@@ -42,8 +43,20 @@ export const useUserStore = defineStore("user", {
       }
     },
     async logout() {
-      this.user = null;
-      await userService.logout();
+      try {
+        await userService.logout();
+        this.user = null;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async saveUser(user) {
+      try {
+        const newUser = await userService.saveUser(user);
+        this.user = newUser;
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 });

@@ -1,6 +1,6 @@
 <template>
-  <section>
-    <form @submit.prevent="updateUser">
+  <section v-if="user">
+    <form @submit.prevent="saveUser">
       <h1>{{ user.email }}</h1>
       <h3>User name</h3>
       <h4 v-if="isCheckingUser">Checking Username...</h4>
@@ -8,15 +8,20 @@
       <input @input="checkUsername" type="text" v-model="user.username" />
       <h6 v-if="usernameMessage">{{ usernameMessage }}</h6>
       <img :src="user.imgUrl" />
-      <button @click="toggleEditor">Update Image</button>
+      <input type="submit" value="save" />
     </form>
-    <img-edit v-if="isEditing" :img="user.imgUrl" />
+    <button @click="toggleEditor">Update Image</button>
+    <img-edit
+      v-if="isEditing"
+      :img="user.imgUrl"
+      @save="updateUser"
+      @close="toggleEditor"
+    />
   </section>
 </template>
 
 <script>
-import { utilService } from "../../services/util-service";
-import imgEdit from "../user/img-edit.vue";
+import imgEdit from "./img-edit.vue";
 export default {
   props: {
     user: {
@@ -25,7 +30,7 @@ export default {
     },
     isUsernameTaken: {
       type: Boolean,
-      required: true,
+      required: false,
     },
   },
   data() {
@@ -54,9 +59,18 @@ export default {
     toggleEditor() {
       this.isEditing = !this.isEditing;
     },
+    updateUser(type, entity) {
+      console.log(type, entity);
+      this.user[type] = entity;
+    },
+    saveUser() {
+      this.$emit("auth", "saveUser", this.user);
+    },
   },
   created() {
-    this.$emit("auth", "loadUser");
+    if (!this.user) {
+      this.$emit("auth", "loadUser");
+    }
   },
   components: { imgEdit },
 };

@@ -33,6 +33,7 @@ export default {
     async auth(type, user = '') {
       try {
         await this.userStore[type](user);
+        return user
       } catch (error) {}
     },
   },

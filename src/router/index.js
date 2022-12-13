@@ -4,7 +4,7 @@ import aboutView from "../views/about-view.vue";
 import authView from "../views/auth-view.vue";
 import signUp from "../components/auth/sign-up.vue";
 import logIn from "../components/auth/log-in.vue";
-import createUser from "../components/auth/create-user.vue";
+import createUser from "../components/user/create-user.vue";
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
