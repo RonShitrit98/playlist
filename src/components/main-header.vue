@@ -14,6 +14,7 @@
     <div v-if="isUserModal && this.user" class="user-modal">
       <h1>{{ user.fullname }}</h1>
       <h2>{{ user.email }}</h2>
+      <router-link :to="`profile/${user._id}`">Profile</router-link>
       <button @click="logout">Log out</button>
     </div>
   </section>

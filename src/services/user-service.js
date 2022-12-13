@@ -4,11 +4,11 @@ export const userService = {
   signup,
   login,
   loadUser,
-  findUserById,
+  getUserById,
   logout,
   getEmptyUser,
   checkUsername,
-  saveUser
+  saveUser,
 };
 
 async function signup(user) {
@@ -23,14 +23,12 @@ async function login(creds) {
   return httpService.post("auth/login", creds, true);
 }
 
-async function findUserById(id) {
-  // const users = await storageService.query(USER_KEY);
-  // const user = users.find((user) => user._id === id);
-  // return user;
+async function getUserById(id) {
+  return httpService.get(`user/${id}`);
 }
 
 async function loadUser() {
-  return httpService.get("auth");
+  return httpService.get(`auth`);
 }
 
 async function logout() {

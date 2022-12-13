@@ -6,6 +6,7 @@ export const useUserStore = defineStore("user", {
     return {
       user: null,
       userToDisplay: null,
+      isProfileEditMode: false,
     };
   },
   getters: {
@@ -36,8 +37,15 @@ export const useUserStore = defineStore("user", {
     },
     async findUserById(id) {
       try {
-        const user = await userService.loadUser(id);
+        if (this.user._id === id) {
+          this.userToDisplay = this.user;
+          this.isProfileEditMode = true;
+          return;
+        }
+        console.log(this.user._id === id);
+        const user = await userService.getUserById(id);
         this.userToDisplay = user;
+        this.isProfileEditMode = false;
       } catch (error) {
         console.log(error);
       }

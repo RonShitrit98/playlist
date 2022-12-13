@@ -30,10 +30,12 @@ export default {
         console.log(error);
       }
     },
-    async auth(type, user = '') {
+    async auth(type, user = "") {
       try {
         await this.userStore[type](user);
-        return user
+        await this.userStore.loadUser();
+        if (type === "saveUser")
+          this.$router.replace(`/profile/${this.user._id}`);
       } catch (error) {}
     },
   },

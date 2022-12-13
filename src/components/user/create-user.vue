@@ -63,7 +63,7 @@ export default {
       console.log(type, entity);
       this.user[type] = entity;
     },
-    saveUser() {
+   async saveUser() {
       this.$emit("auth", "saveUser", this.user);
     },
   },
