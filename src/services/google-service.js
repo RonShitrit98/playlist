@@ -1,6 +1,6 @@
 export const getGoogleUrl = (from) => {
   const rootUrl = `https://accounts.google.com/o/oauth2/v2/auth`;
-
+  console.log(from);
   const options = {
     redirect_uri: import.meta.env.VITE_GOOGLE_OAUTH_REDIRECT,
     client_id: import.meta.env.VITE_GOOGLE_OAUTH_CLIENT_ID,

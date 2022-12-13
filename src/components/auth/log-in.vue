@@ -23,7 +23,7 @@ export default {
         email: null,
         password: null,
       },
-      googleUrl: getGoogleUrl(),
+      googleUrl: getGoogleUrl('login'),
     };
   },
   methods: {
