@@ -1,18 +1,19 @@
 .profile-title {
   padding-top: 20px;
   display: grid;
-  grid-template-columns: 40% auto;
+  grid-template-columns: repeat(2, auto);
+  margin-bottom: rem(45px);
   gap: rem(20px);
   .title-img {
-    padding: 10px;
+    width: 120px;
+    height: 120px;
     @include profile-img;
     margin: auto;
-    width:100%;
   }
 
   .info {
     display: grid;
-    grid-template-rows: 25% 10% auto;
+    grid-template-rows: 25% 15% auto;
     .fullname {
       font-size: rem(32px);
     }

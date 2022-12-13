@@ -1,0 +1,11 @@
+.profile-nav{
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    .nav-btn{
+        border: none;
+        width: 100px;
+        background-color: transparent;
+    }
+}
