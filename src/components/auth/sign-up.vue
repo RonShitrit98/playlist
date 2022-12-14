@@ -22,6 +22,7 @@
     </form>
     <div>
       <a :href="googleUrl">Sign up with Google</a>
+      <a :href="spotifyUrl">Sign up with Spotify</a>
     </div>
   </section>
 </template>
@@ -29,6 +30,7 @@
 <script>
 import { userService } from "../../services/user-service";
 import { getGoogleUrl } from "../../services/google-service";
+import { getSpotifyUrl } from "../../services/spotify-service";
 export default {
   props: {
     isUsernameTaken: {
@@ -40,6 +42,7 @@ export default {
     return {
       newUser: userService.getEmptyUser(),
       googleUrl: getGoogleUrl(),
+      spotifyUrl: getSpotifyUrl(),
       confirmPassword: null,
       usernameMessage: null,
       isCheckingUser: false,
