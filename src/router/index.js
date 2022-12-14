@@ -5,7 +5,9 @@ import authView from "../views/auth-view.vue";
 import signUp from "../components/auth/sign-up.vue";
 import logIn from "../components/auth/log-in.vue";
 import createUser from "../components/user/create-user.vue";
-import profileView from '../views/profile-view.vue'
+import profileView from "../views/profile-view.vue";
+import createView from "../views/create-view.vue";
+import createPost from "../components/post/create-post.vue";
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -24,6 +26,17 @@ const router = createRouter({
       path: "/profile/:id",
       name: "profile",
       component: profileView,
+    },
+    {
+      path: "/create",
+      name: "create",
+      component: createView,
+      children: [
+        {
+          path: "post",
+          component: createPost,
+        },
+      ],
     },
     {
       path: "/auth",

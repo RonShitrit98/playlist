@@ -2,7 +2,7 @@
   <section class="main-nav">
     <nav>
       <router-link to="/">Home</router-link>
-      <router-link to="/new-post">+</router-link>
+      <router-link to="/create/post">+</router-link>
       <router-link v-if="!user" to="/auth/signup">Sign up</router-link>
       <router-link v-if="!user" to="/auth/login">Log in</router-link>
       <button v-else @click="toggleUserModal">
