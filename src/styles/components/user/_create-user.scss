@@ -1,0 +1,43 @@
+.create-user {
+  position: relative;
+  padding: 70px 20px 70px 20px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 50px;
+  h3 {
+    font-size: rem(18px);
+    // padding-bottom: 0px;
+  }
+  .title {
+    font-size: rem(24px);
+  }
+  .img-options {
+    display: grid;
+    grid-template-columns: 150px auto;
+    column-gap: 20px;
+    img {
+      width: 150px;
+      height: 150px;
+      @include profile-img;
+    }
+    h3 {
+      grid-column: span 2;
+    }
+    button {
+      border: none;
+      padding: 10px;
+      margin-bottom: 10px;
+      align-self: flex-end;
+      justify-self: start;
+    }
+  }
+  .user-info {
+    display: grid;
+    row-gap: 25px;
+    padding: 0px 40px 0px 40px;
+    input {
+      height: 30px;
+      width: 100%;
+    }
+  }
+}

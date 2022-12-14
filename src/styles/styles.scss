@@ -8,13 +8,20 @@
 @import "basic/base";
 
 // VIEWS
-@import 'views/about-view';
-@import 'views/profile-view';
+@import "views/about-view";
+@import "views/profile-view";
 
 // COMPONENTS
-@import 'components/main-header';
-@import 'components/main-nav';
+@import "components/main-header";
+@import "components/main-nav";
 
 //PROFILE
-@import 'components/profile/profile-title';
-@import 'components/profile/profile-nav';
+@import "components/profile/profile-title";
+@import "components/profile/profile-nav";
+
+//USER
+@import "components/user/create-user";
+
+//UTIL
+@import "components/util/img-edit";
+

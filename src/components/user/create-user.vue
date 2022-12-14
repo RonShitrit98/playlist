@@ -1,18 +1,26 @@
 <template>
-  <section v-if="user">
-    <img :src="user.imgUrl" />
-    <button @click.stop="toggleEditor">Update Image</button>
-    <form @submit.prevent="saveUser">
+  <section class="create-user" v-if="user">
+    <h1 class="title">Create profile</h1>
+    <div class="img-options">
+      <h3>Photo</h3>
+      <img :src="user.imgUrl" />
+      <button @click.stop="toggleEditor">Image</button>
+    </div>
+    <form class="user-info" @submit.prevent="saveUser">
       <username-check :username="user.username" @save="updateUser" />
-      <h3>Display name</h3>
-      <input type="text" v-model="user.fullname" />
-      <h3>Description</h3>
-      <input type="text" v-model="user.description" />
-      <input type="submit" value="save" />
+      <div class="input-container">
+        <h3>Display name</h3>
+        <input type="text" v-model="user.fullname" />
+      </div>
+      <div class="input-container">
+        <h3>Description</h3>
+        <input type="text" v-model="user.description" />
+      </div>
+      <input type="submit" value="Create profile" />
     </form>
     <img-edit
       v-if="isEditing"
-      :img="user.imgUrl"
+      :image="user.imgUrl"
       @save="updateUser"
       @close="toggleEditor"
     />
@@ -21,7 +29,7 @@
 
 <script>
 import usernameCheck from "../util/username-check.vue";
-import imgEdit from "./img-edit.vue";
+import imgEdit from "../util/img-edit.vue";
 export default {
   props: {
     user: {
