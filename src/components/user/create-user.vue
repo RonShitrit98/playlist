@@ -1,16 +1,15 @@
 <template>
   <section v-if="user">
+    <img :src="user.imgUrl" />
+    <button @click.stop="toggleEditor">Update Image</button>
     <form @submit.prevent="saveUser">
-      <h1>{{ user.email }}</h1>
-      <h3>User name</h3>
-      <h4 v-if="isCheckingUser">Checking Username...</h4>
-      <h4 v-if="isUsernameTaken">this user name is taken</h4>
-      <input @input="checkUsername" type="text" v-model="user.username" />
-      <h6 v-if="usernameMessage">{{ usernameMessage }}</h6>
-      <img :src="user.imgUrl" />
+      <username-check :username="user.username" @save="updateUser" />
+      <h3>Display name</h3>
+      <input type="text" v-model="user.fullname" />
+      <h3>Description</h3>
+      <input type="text" v-model="user.description" />
       <input type="submit" value="save" />
     </form>
-    <button @click="toggleEditor">Update Image</button>
     <img-edit
       v-if="isEditing"
       :img="user.imgUrl"
@@ -21,12 +20,13 @@
 </template>
 
 <script>
+import usernameCheck from "../util/username-check.vue";
 import imgEdit from "./img-edit.vue";
 export default {
   props: {
     user: {
       type: Object,
-      reqired: false,
+      reqired: true,
     },
     isUsernameTaken: {
       type: Boolean,
@@ -42,20 +42,6 @@ export default {
     };
   },
   methods: {
-    checkUsername() {
-      var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,<>\/?~]/;
-      if (format.test(this.user.username)) {
-        this.usernameMessage = "user name cant contain special characters";
-        return;
-      }
-      if (this.isCheckingUser) return;
-      this.usernameMessage = null;
-      this.isCheckingUser = true;
-      setTimeout(() => {
-        this.$emit("checkUsername", this.user.username);
-        this.isCheckingUser = false;
-      }, 3000);
-    },
     toggleEditor() {
       this.isEditing = !this.isEditing;
     },
@@ -63,7 +49,7 @@ export default {
       console.log(type, entity);
       this.user[type] = entity;
     },
-   async saveUser() {
+    async saveUser() {
       this.$emit("auth", "saveUser", this.user);
     },
   },
@@ -72,6 +58,6 @@ export default {
       this.$emit("auth", "loadUser");
     }
   },
-  components: { imgEdit },
+  components: { imgEdit, usernameCheck },
 };
 </script>
