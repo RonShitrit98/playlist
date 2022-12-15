@@ -30,7 +30,7 @@
 <script>
 import { userService } from "../../services/user-service";
 import { getGoogleUrl } from "../../services/google-service";
-import { getSpotifyUrl } from "../../services/spotify-service";
+import { spotifyService } from "../../services/spotify-service";
 export default {
   props: {
     isUsernameTaken: {
@@ -42,7 +42,7 @@ export default {
     return {
       newUser: userService.getEmptyUser(),
       googleUrl: getGoogleUrl(),
-      spotifyUrl: getSpotifyUrl(),
+      spotifyUrl: spotifyService.getSpotifyUrl(),
       confirmPassword: null,
       usernameMessage: null,
       isCheckingUser: false,

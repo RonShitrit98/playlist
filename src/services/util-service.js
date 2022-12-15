@@ -2,6 +2,7 @@ export const utilService = {
   copyItem,
   makeId,
   checkString,
+  getCookieByName,
 };
 
 function copyItem(item) {
@@ -20,4 +21,13 @@ function makeId(length = 8) {
 
 function checkString(string, type = "username") {
   if (type === "username") return /^[0-9a-zA-Z_.-]+$/.test(string);
+}
+
+function getCookieByName(name) {
+  var match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
+  if (match) {
+    return match[2];
+  } else {
+    console.log("--something went wrong---");
+  }
 }

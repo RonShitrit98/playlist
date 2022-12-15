@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { userService } from "../services/user-service";
 import { utilService } from "../services/util-service";
+import { useMediaStore } from "./media.store";
 export const useUserStore = defineStore("user", {
   state: () => {
     return {
@@ -12,6 +13,9 @@ export const useUserStore = defineStore("user", {
   getters: {
     currUser() {
       return utilService.copyItem(this.user);
+    },
+    mediaStore() {
+      return useMediaStore();
     },
   },
   actions: {
@@ -68,3 +72,6 @@ export const useUserStore = defineStore("user", {
     },
   },
 });
+
+
+

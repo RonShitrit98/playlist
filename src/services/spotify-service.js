@@ -1,6 +1,12 @@
+import axios from "axios";
 import { utilService } from "./util-service";
 
-export const getSpotifyUrl = () => {
+export const spotifyService = {
+  getSpotifyUrl,
+  getPlaylists,
+};
+
+function getSpotifyUrl() {
   var state = utilService.makeId(16);
   var scope = "user-read-private user-read-email";
   const rootUrl = "https://accounts.spotify.com/authorize?";
@@ -13,7 +19,27 @@ export const getSpotifyUrl = () => {
   };
   const qs = new URLSearchParams(options);
   return `${rootUrl}${qs.toString()}`;
-};
+}
 
-
-
+async function getPlaylists() {
+  const access_token = utilService.getCookieByName("spotify_access_token");
+  var authOptions = {
+    url: "https://api.spotify.com/v1/me/playlists",
+    method: "get",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + access_token,
+    },
+    json: true,
+  };
+  try {
+    const res = await axios(authOptions);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+  // curl --request GET \
+  //   --url https://api.spotify.com/v1/me \
+  //   --header 'Authorization: ' \
+  //   --header 'Content-Type: application/json'
+}
