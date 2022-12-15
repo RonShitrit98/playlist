@@ -20,14 +20,20 @@ export default {
   },
   methods: {
     placePost(tile) {
-      const row = this.post.style.position.row;
-      const cols = this.post.style.position.cols;
-      if (!row || tile.row !== row) {
-        this.post.style.position.row = tile.row;
-        this.post.style.position.cols.push(tile.col);
-      } else if (cols[0] > tile.col) {
-        cols.unshift(tile.col);
-      } else cols.push(tile.col);
+      const newPos = postService.handlePostPlacment(
+        this.post.style.position,
+        tile
+      );
+      // this.post.style.position = newPos;
+      
+      // const row = this.post.style.position.row;
+      // const cols = this.post.style.position.cols;
+      // if (!row || tile.row !== row) {
+      //   this.post.style.position.row = tile.row;
+      //   this.post.style.position.cols.push(tile.col);
+      // } else if (cols[0] > tile.col) {
+      //   cols.unshift(tile.col);
+      // } else cols.push(tile.col);
     },
   },
   computed: {
