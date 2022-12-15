@@ -20,20 +20,7 @@ export default {
   },
   methods: {
     placePost(tile) {
-      const newPos = postService.handlePostPlacment(
-        this.post.style.position,
-        tile
-      );
-      // this.post.style.position = newPos;
-      
-      // const row = this.post.style.position.row;
-      // const cols = this.post.style.position.cols;
-      // if (!row || tile.row !== row) {
-      //   this.post.style.position.row = tile.row;
-      //   this.post.style.position.cols.push(tile.col);
-      // } else if (cols[0] > tile.col) {
-      //   cols.unshift(tile.col);
-      // } else cols.push(tile.col);
+      this.$emit("update", "position", tile);
     },
   },
   computed: {
@@ -49,10 +36,7 @@ export default {
       const row = this.post.style.position.row;
       const cols = this.post.style.position.cols;
       if (!row || !cols) return;
-      console.log(cols[cols.length - 1]);
       const lastCol = cols[cols.length - 1];
-      console.log(lastCol);
-      console.log(`grid-row:${row}; grid-cloumn:${cols[0]}/${lastCol + 1};`);
       return `grid-row:${row}; grid-column:${cols[0]}/${lastCol + 1};`;
     },
   },

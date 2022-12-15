@@ -1,7 +1,11 @@
 <template>
   <section class="create-post">
-    <h3>Pick placment</h3>
-    <playlist-preview :post="post" />
+    <div class="post-nav">
+      <h3>Pick placment</h3>
+      <button>Back</button>
+      <button>Next</button>
+    </div>
+    <playlist-preview :post="post" @update="updatePost" />
   </section>
 </template>
 
@@ -14,6 +18,18 @@ export default {
     return {
       post: postService.getNewPost(),
     };
+  },
+  methods: {
+    updatePost(action, item) {
+      if (action === "position") {
+        const newPos = postService.handlePostPlacment(
+          this.post.style.position,
+          item
+        );
+
+        this.post.style.position = newPos;
+      } else return;
+    },
   },
 };
 </script>
