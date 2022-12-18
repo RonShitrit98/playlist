@@ -36,22 +36,23 @@ function handlePostPlacment(position, tile) {
     position.cols.push(tile.col);
   }
   position.cols.sort((a, b) => a - b);
-  if (position.cols.length === 2 && position.cols[1] === 3)
+  if (
+    position.cols.length === 2 &&
+    position.cols[1] === 3 &&
+    position.cols[0] === 1
+  )
     position.cols.splice(1, 0, 2);
   return position;
 }
 
 function getNewPost() {
   return {
-    title: "",
-    description: "",
-    type: "",
     style: {
       position: {
         cols: [],
       },
     },
-    media: {},
+    media: [],
     createdAt: null,
     createdBy: null,
   };

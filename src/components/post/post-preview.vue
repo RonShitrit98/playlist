@@ -1,24 +1,45 @@
 <template>
   <div class="post-preview">
-    <div class="post-container">
-      <input
+    <div
+      class="post-container"
+      ref="postPrev"
+      :style="`height:${postHeight}px;`"
+    >
+      <button @click="toggleMenu">Add..</button>
+    </div>
+    <div v-if="isMenu" class="prev-menu">
+      <ul>
+        <li @click="addMedia('txt')">Text</li>
+        <li @click="toggleSpotifyModal">Spotify</li>
+        <li @click="addMedia('img')">Image</li>
+      </ul>
+      <!-- <input
         @input="updatePost($event.target.value, 'title')"
         type="text"
         :value="post.title"
       />
-      <button @click="toggleMenu">Add..</button>
-    </div>
-    <div v-if="isMenu" class="prev-menu">
       <label for="img-input">Upload Image</label>
-      <button @click="toggleSpotifyModal">Add from spotify</button>
+      <button @click="toggleSpotifyModal">Add from spotify</button> -->
       <div v-if="isSpotifyModal" class="spotify-modal">
-        <button @click="getPlaylists">Add Playlist</button>
+        <h1>Spotify Modal</h1>
+        <input type="text" v-model="searchValue" @input="searchSpotify" />
+        <button @click="type = 'albums'">Albums</button>
+        <button @click="type = 'tracks'">Tracks</button>
+        <button @click="type = 'artists'">Artists</button>
+        <ul v-if="searchResult">
+          <li v-for="item in searchResult[type].items">
+            <img :src="item.images[0].url" alt="" />
+            {{ item.name }}
+          </li>
+        </ul>
       </div>
     </div>
+    <button @click="getPlaylists">Add Playlist</button>
   </div>
 </template>
 
 <script>
+import { spotifyService } from "../../services/spotify-service";
 export default {
   props: {
     post: {
@@ -30,6 +51,11 @@ export default {
     return {
       isMenu: false,
       isSpotifyModal: false,
+      postHeight: null,
+      searchValue: null,
+      isSearching: false,
+      searchResult: null,
+      type: "albums",
     };
   },
   methods: {
@@ -45,9 +71,29 @@ export default {
     toggleSpotifyModal() {
       this.isSpotifyModal = !this.isSpotifyModal;
     },
-    getPlaylists(){
-      this.$emit('getPlaylist')
-    }
+    getPlaylists() {
+      this.$emit("getPlaylist");
+    },
+    addMedia(type) {
+      console.log(type);
+    },
+    searchSpotify() {
+      if (this.isSearching) return;
+      this.isSearching = true;
+      setTimeout(async () => {
+        this.searchResult = await spotifyService.search(this.searchValue);
+        this.isSearching = false;
+      }, 1000);
+    },
+  },
+  computed: {
+    getPostSize() {
+      // console.log(this.postWidth)
+    },
+  },
+  mounted() {
+    this.postHeight =
+      this.$refs.postPrev.clientWidth / this.post.style.position.cols.length;
   },
 };
 </script>

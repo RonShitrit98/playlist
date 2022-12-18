@@ -4,6 +4,7 @@ import { utilService } from "./util-service";
 export const spotifyService = {
   getSpotifyUrl,
   getPlaylists,
+  search,
 };
 
 function getSpotifyUrl() {
@@ -42,4 +43,27 @@ async function getPlaylists() {
   //   --url https://api.spotify.com/v1/me \
   //   --header 'Authorization: ' \
   //   --header 'Content-Type: application/json'
+}
+
+async function search(val) {
+  const access_token = utilService.getCookieByName("spotify_access_token");
+  var authOptions = {
+    url: "https://api.spotify.com/v1/search",
+    method: "get",
+    params: {
+      q: val,
+      type: "track,artist,album",
+    },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + access_token,
+    },
+    json: true,
+  };
+  try {
+    const res = await axios(authOptions);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
 }
