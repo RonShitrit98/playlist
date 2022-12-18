@@ -35,7 +35,7 @@ async function getPlaylists() {
   };
   try {
     const res = await axios(authOptions);
-    return res.data;
+    return res.data.items;
   } catch (error) {
     console.log(error);
   }

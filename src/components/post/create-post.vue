@@ -6,6 +6,7 @@
       <button @click="move('next')">Next</button>
     </div>
     <component
+      :playlists="playlists"
       :is="currCmp"
       :post="post"
       @update="updatePost"
@@ -53,6 +54,11 @@ export default {
         await this.mediaStore.getPlaylists();
         console.log(this.mediaStore.playlists);
       } catch (error) {}
+    },
+  },
+  computed: {
+    playlists() {
+      return this.mediaStore.playlists;
     },
   },
 };

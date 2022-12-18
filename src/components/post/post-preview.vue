@@ -32,6 +32,12 @@
             {{ item.name }}
           </li>
         </ul>
+        <div class="user-playlists">
+          <h1>Your playlists:</h1>
+          <ul>
+            <li v-for="playlist in playlists">{{ playlist.name }}</li>
+          </ul>
+        </div>
       </div>
     </div>
     <button @click="getPlaylists">Add Playlist</button>
@@ -45,6 +51,10 @@ export default {
     post: {
       type: Object,
       reqired: true,
+    },
+    playlists: {
+      type: Array,
+      reqired: false,
     },
   },
   data() {
