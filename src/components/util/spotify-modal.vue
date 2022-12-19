@@ -1,0 +1,78 @@
+<template>
+  <div class="spotify-modal">
+    <h1>Spotify-modal</h1>
+    <div class="playlist-display">
+      <h4 v-for="playlist in playlists" :key="playlist.name">
+        {{ playlist.name }}
+      </h4>
+    </div>
+    <div class="spotify-search">
+      <h3>Search</h3>
+      <input type="text" v-model="searchVal" @input="search" />
+      <button v-for="opt in resOpts" @click="type = opt">
+        {{ opt.charAt(0).toUpperCase() + opt.slice(1).toLowerCase() }}
+      </button>
+      <div class="search-res">
+        <div
+          class="media-display"
+          v-if="searchRes"
+          v-for="res in searchResDisplay"
+          @click="selectItem(res)"
+        >
+          <img v-if="res.images[0]" :src="res.images[0].url" alt="" />
+          <h4>{{ res.name }}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { spotifyService } from "../../services/spotify-service";
+import { useMediaStore } from "../../stores/media.store";
+export default {
+  setup() {
+    const mediaStore = useMediaStore();
+    return { mediaStore };
+  },
+  data() {
+    return {
+      isSearching: false,
+      searchRes: null,
+      searchVal: null,
+      type: "artist",
+      resOpts: ["artist", "album", "track", "playlist"],
+    };
+  },
+  methods: {
+    search() {
+      if (this.isSearching) return;
+      this.isSearching = true;
+      setTimeout(async () => {
+        this.searchRes = await spotifyService.search(this.searchVal);
+        console.log(this.searchRes);
+        this.isSearching = false;
+      }, 1000);
+    },
+    selectItem(item) {
+      console.log("selecting..");
+      this.$emit("selectMedia", this.type, item);
+    },
+  },
+  computed: {
+    playlists() {
+      return this.mediaStore.playlists;
+    },
+    searchResDisplay() {
+        console.log(this.type)
+      if (!this.searchRes) return;
+      if (this.type === "track") {
+        this.searchRes[this.type + "s"].items.forEach((item) => {
+          item.images = item.album.images;
+        });
+      }
+      return this.searchRes[this.type + "s"].items;
+    },
+  },
+};
+</script>

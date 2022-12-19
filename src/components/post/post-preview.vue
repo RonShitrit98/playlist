@@ -5,6 +5,10 @@
       ref="postPrev"
       :style="`height:${postHeight}px;`"
     >
+      <div v-for="item in mediaToDisplay">
+        {{ item.name }}
+        <img :src="item.imgUrl" alt="" />
+      </div>
       <button @click="toggleMenu">Add..</button>
     </div>
     <div v-if="isMenu" class="prev-menu">
@@ -13,39 +17,14 @@
         <li @click="toggleSpotifyModal">Spotify</li>
         <li @click="addMedia('img')">Image</li>
       </ul>
-      <!-- <input
-        @input="updatePost($event.target.value, 'title')"
-        type="text"
-        :value="post.title"
-      />
-      <label for="img-input">Upload Image</label>
-      <button @click="toggleSpotifyModal">Add from spotify</button> -->
-      <div v-if="isSpotifyModal" class="spotify-modal">
-        <h1>Spotify Modal</h1>
-        <input type="text" v-model="searchValue" @input="searchSpotify" />
-        <button @click="type = 'albums'">Albums</button>
-        <button @click="type = 'tracks'">Tracks</button>
-        <button @click="type = 'artists'">Artists</button>
-        <ul v-if="searchResult">
-          <li v-for="item in searchResult[type].items">
-            <img :src="item.images[0].url" alt="" />
-            {{ item.name }}
-          </li>
-        </ul>
-        <div class="user-playlists">
-          <h1>Your playlists:</h1>
-          <ul>
-            <li v-for="playlist in playlists">{{ playlist.name }}</li>
-          </ul>
-        </div>
-      </div>
+      <spotify-modal v-if="isSpotifyModal" @selectMedia="addMedia" />
     </div>
     <button @click="getPlaylists">Add Playlist</button>
   </div>
 </template>
 
 <script>
-import { spotifyService } from "../../services/spotify-service";
+import spotifyModal from "../util/spotify-modal.vue";
 export default {
   props: {
     post: {
@@ -62,10 +41,6 @@ export default {
       isMenu: false,
       isSpotifyModal: false,
       postHeight: null,
-      searchValue: null,
-      isSearching: false,
-      searchResult: null,
-      type: "albums",
     };
   },
   methods: {
@@ -84,26 +59,40 @@ export default {
     getPlaylists() {
       this.$emit("getPlaylist");
     },
-    addMedia(type) {
-      console.log(type);
-    },
-    searchSpotify() {
-      if (this.isSearching) return;
-      this.isSearching = true;
-      setTimeout(async () => {
-        this.searchResult = await spotifyService.search(this.searchValue);
-        this.isSearching = false;
-      }, 1000);
+    addMedia(type, item = {}) {
+      if (type === "txt" || type === "img") {
+        return;
+        // item.type=type,
+        // item[]
+      }
+      this.post.media.push(item);
     },
   },
   computed: {
     getPostSize() {
       // console.log(this.postWidth)
     },
+    mediaToDisplay() {
+      const media = this.post.media.map((item) => {
+        if (item.type === "txt")
+          return {
+            txt: item.txt,
+          };
+        else
+          return {
+            type: item.type,
+            name: item.name,
+            imgUrl: item.images[0].url,
+            url: item.external_urls.spotify,
+          };
+      });
+      return media;
+    },
   },
   mounted() {
     this.postHeight =
       this.$refs.postPrev.clientWidth / this.post.style.position.cols.length;
   },
+  components: { spotifyModal },
 };
 </script>

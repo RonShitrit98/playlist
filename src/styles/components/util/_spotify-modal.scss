@@ -1,0 +1,21 @@
+.spotify-modal {
+  position: absolute;
+  background-color: gainsboro;
+  max-width: 350px;
+  max-height: 50vh;
+  overflow: scroll;
+  .spotify-search {
+    .search-res {
+      display: flex;
+      flex-wrap: wrap;
+      .media-display {
+        width: 100px;
+        border: 1px solid black;
+        img {
+          padding: 10px;
+          width: 100%;
+        }
+      }
+    }
+  }
+}

@@ -52,7 +52,7 @@ async function search(val) {
     method: "get",
     params: {
       q: val,
-      type: "track,artist,album",
+      type: "track,artist,album,playlist",
     },
     headers: {
       "Content-Type": "application/json",
