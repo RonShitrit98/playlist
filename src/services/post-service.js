@@ -1,7 +1,10 @@
+import { utilService } from "./util-service";
+
 export const postService = {
   getPlaylistGrid,
   getNewPost,
   handlePostPlacment,
+  getEmptyMedia,
 };
 
 function getPlaylistGrid(height = 6) {
@@ -56,4 +59,17 @@ function getNewPost() {
     createdAt: null,
     createdBy: null,
   };
+}
+
+function getEmptyMedia(type) {
+  if (type === "txt") {
+    return {
+      _id: utilService.makeId(),
+      type,
+      txt: "text",
+      style: {
+        size: 1,
+      },
+    };
+  }
 }

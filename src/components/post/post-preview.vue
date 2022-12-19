@@ -6,6 +6,8 @@
       :style="`height:${postHeight}px;`"
     >
       <div v-for="item in mediaToDisplay">
+        <media-style @update="updateMedia" :media="item" />
+        <p :style="`font-size:${item.style.size*10}px`" v-for="txt in getTxtToDisplay(item.txt)">{{ txt }}</p>
         {{ item.name }}
         <img :src="item.imgUrl" alt="" />
       </div>
@@ -24,6 +26,8 @@
 </template>
 
 <script>
+import { postService } from "../../services/post-service";
+import mediaStyle from "../util/media-style.vue";
 import spotifyModal from "../util/spotify-modal.vue";
 export default {
   props: {
@@ -60,12 +64,16 @@ export default {
       this.$emit("getPlaylist");
     },
     addMedia(type, item = {}) {
-      if (type === "txt" || type === "img") {
-        return;
-        // item.type=type,
-        // item[]
+      if (type === "txt") {
+        item = postService.getEmptyMedia("txt");
       }
       this.post.media.push(item);
+    },
+    updateMedia(id, type, item) {
+      console.log(id, type, item);
+    },
+    getTxtToDisplay(txt) {
+      return txt.split("\n");
     },
   },
   computed: {
@@ -74,10 +82,7 @@ export default {
     },
     mediaToDisplay() {
       const media = this.post.media.map((item) => {
-        if (item.type === "txt")
-          return {
-            txt: item.txt,
-          };
+        if (item.type === "txt") return item;
         else
           return {
             type: item.type,
@@ -93,6 +98,6 @@ export default {
     this.postHeight =
       this.$refs.postPrev.clientWidth / this.post.style.position.cols.length;
   },
-  components: { spotifyModal },
+  components: { spotifyModal, mediaStyle },
 };
 </script>
