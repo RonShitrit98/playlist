@@ -5,12 +5,61 @@
       ref="postPrev"
       :style="`height:${postHeight}px;`"
     >
-      <div v-for="item in mediaToDisplay">
-        <media-style @update="updateMedia" :media="item" />
-        <p :style="`font-size:${item.style.size*10}px`" v-for="txt in getTxtToDisplay(item.txt)">{{ txt }}</p>
+      <div class="media-item" v-for="item in mediaToDisplay">
+        <media-style
+          v-if="item._id === editingItemId"
+          @update="updateMedia"
+          :media="item"
+        />
+        <div class="txt-display" v-else>
+          <button @click="editMedia(item._id)">Edit</button>
+          <p
+            :style="`font-size:${item.style.size * 10}px;color:${
+              item.style.color
+            };`"
+            v-for="txt in getTxtToDisplay(item.txt)"
+          >
+            {{ txt }}
+          </p>
+        </div>
+      </div>
+
+      <!-- <div
+        class="media-item"
+        ref="draggableContainer"
+        id="draggable-container"
+        @mousedown="dragMouseDown($event)"
+        @click="editMedia(item._id)"
+        v-for="item in mediaToDisplay"
+      >
+        <div class="edit-mode">
+          <media-style
+            v-if="item._id === editingItemId"
+            @update="updateMedia"
+            :media="item"
+          />
+          <textarea
+            :style="`font-size:${item.style.size * 10}px;color:${
+              item.style.color
+            };`"
+            v-if="item._id === editingItemId"
+            v-model="item.txt"
+          ></textarea>
+          <div class="txt-display" v-else>
+            <p
+              :style="`font-size:${item.style.size * 10}px;color:${
+                item.style.color
+              };`"
+              v-for="txt in getTxtToDisplay(item.txt)"
+            >
+              {{ txt }}
+            </p>
+          </div>
+          <pre>{{ item }}</pre>
+        </div>
         {{ item.name }}
         <img :src="item.imgUrl" alt="" />
-      </div>
+      </div> -->
       <button @click="toggleMenu">Add..</button>
     </div>
     <div v-if="isMenu" class="prev-menu">
@@ -45,6 +94,7 @@ export default {
       isMenu: false,
       isSpotifyModal: false,
       postHeight: null,
+      editingItemId: null,
     };
   },
   methods: {
@@ -74,6 +124,15 @@ export default {
     },
     getTxtToDisplay(txt) {
       return txt.split("\n");
+    },
+    editMedia(id) {
+      this.editingItemId = id;
+    },
+    test(ev) {
+      console.log(ev.clientX, ev.clientX);
+      console.log(ev.target.style);
+      ev.target.style.left = ev.clientX + "px";
+      ev.target.style.right = ev.clientY + "px";
     },
   },
   computed: {
