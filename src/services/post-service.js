@@ -1,10 +1,13 @@
 import { utilService } from "./util-service";
+import { httpService } from "./http-service";
 
 export const postService = {
   getPlaylistGrid,
   getNewPost,
   handlePostPlacment,
   getEmptyMedia,
+  createPost,
+  getPosts,
 };
 
 function getPlaylistGrid(height = 6) {
@@ -18,6 +21,14 @@ function getPlaylistGrid(height = 6) {
     }
   }
   return grid;
+}
+
+async function createPost(post) {
+  return httpService.post("post/create", post);
+}
+
+async function getPosts(id) {
+  return httpService.get(`post/${id}`);
 }
 
 function handlePostPlacment(position, tile) {
@@ -68,7 +79,7 @@ function getEmptyMedia(type) {
       type,
       txt: "text",
       style: {
-        size: 1,
+        size: 5,
         color: "",
         bcg: "",
         position: {
@@ -81,7 +92,7 @@ function getEmptyMedia(type) {
     return {
       _id: utilService.makeId(),
       style: {
-        size: 1,
+        size: 5,
         color: "",
         bcg: "",
         position: {

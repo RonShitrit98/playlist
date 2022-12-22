@@ -1,9 +1,7 @@
 <template>
-  <div
-    :class="['media-style', media._id]"
-  >
-    <div class="txt-style" v-if="media.type === 'txt'">
-      <textarea type="text" v-model="media.txt"></textarea>
+  <div :class="['media-style', media._id]" @click.stop>
+    <div class="txt-style">
+      <textarea v-if="media.type === 'txt'" v-model="media.txt"></textarea>
       <button @click="changeSize(1)">+</button>
       <button @click="changeSize(-1)">-</button>
       <input type="color" v-model="media.style.color" />
@@ -20,9 +18,7 @@ export default {
     },
   },
   data() {
-    return {
-    
-    };
+    return {};
   },
   created() {
     console.log(this.media);

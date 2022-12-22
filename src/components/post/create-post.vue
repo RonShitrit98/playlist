@@ -11,6 +11,7 @@
       :post="post"
       @update="updatePost"
       @getPlaylist="getPlaylist"
+      @save="createPost"
     />
   </section>
 </template>
@@ -54,6 +55,13 @@ export default {
         await this.mediaStore.getPlaylists();
         console.log(this.mediaStore.playlists);
       } catch (error) {}
+    },
+    async createPost(post) {
+      try {
+        await this.mediaStore.createPost(post);
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
   computed: {

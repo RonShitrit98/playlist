@@ -2,7 +2,11 @@
   <div class="spotify-modal">
     <h1>Spotify-modal</h1>
     <div class="playlist-display">
-      <h4 v-for="playlist in playlists" :key="playlist.name">
+      <h4
+        v-for="playlist in playlists"
+        :key="playlist.name"
+        @click="selectItem(playlist)"
+      >
         {{ playlist.name }}
       </h4>
     </div>
@@ -64,7 +68,7 @@ export default {
       return this.mediaStore.playlists;
     },
     searchResDisplay() {
-        console.log(this.type)
+      console.log(this.type);
       if (!this.searchRes) return;
       if (this.type === "track") {
         this.searchRes[this.type + "s"].items.forEach((item) => {

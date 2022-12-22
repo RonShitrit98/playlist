@@ -1,9 +1,10 @@
 <template>
   <div class="post-preview">
+    <button @click="savePost">Save</button>
     <div
       class="post-container"
       ref="postPrev"
-      :style="`height:${postHeight}px;`"
+      :style="`height:${postHeight}px;background-color:${post.style.bcg}`"
     >
       <div
         class="media-item"
@@ -12,6 +13,7 @@
         @dragstart="dragMouseDown($event, item)"
         @drag="elementDrag($event, item)"
         :style="getItemPos(item.style.position)"
+        @click="editMedia(item._id)"
       >
         <img :src="item.imgUrl" alt="" draggable="false" />
         <media-style
@@ -20,7 +22,6 @@
           :media="item"
         />
         <div class="txt-display" v-else>
-          <button @click="editMedia(item._id)">Edit</button>
           <p
             :style="`font-size:${item.style.size * 10}px;color:${
               item.style.color
@@ -31,51 +32,18 @@
           </p>
         </div>
       </div>
-
-      <!-- <div
-        class="media-item"
-        ref="draggableContainer"
-        id="draggable-container"
-        @mousedown="dragMouseDown($event)"
-        @click="editMedia(item._id)"
-        v-for="item in mediaToDisplay"
-      >
-        <div class="edit-mode">
-          <media-style
-            v-if="item._id === editingItemId"
-            @update="updateMedia"
-            :media="item"
-          />
-          <textarea
-            :style="`font-size:${item.style.size * 10}px;color:${
-              item.style.color
-            };`"
-            v-if="item._id === editingItemId"
-            v-model="item.txt"
-          ></textarea>
-          <div class="txt-display" v-else>
-            <p
-              :style="`font-size:${item.style.size * 10}px;color:${
-                item.style.color
-              };`"
-              v-for="txt in getTxtToDisplay(item.txt)"
-            >
-              {{ txt }}
-            </p>
-          </div>
-          <pre>{{ item }}</pre>
-        </div>
-        {{ item.name }}
-      </div> -->
       <button @click="toggleMenu">Add..</button>
     </div>
     <div v-if="isMenu" class="prev-menu">
       <ul>
         <li @click="addMedia('txt')">Text</li>
         <li @click="toggleSpotifyModal">Spotify</li>
-        <li @click="addMedia('img')">Image</li>
+        <!-- <li @click="addMedia('img')">Image</li> -->
       </ul>
       <spotify-modal v-if="isSpotifyModal" @selectMedia="addMedia" />
+    </div>
+    <div class="style-modal">
+      <input type="color" v-model="post.style.bcg" />
     </div>
     <button @click="getPlaylists">Add Playlist</button>
   </div>
@@ -113,7 +81,7 @@ export default {
   },
   methods: {
     savePost() {
-      console.log("saving post...");
+      this.$emit("save", this.post);
     },
     updatePost(type, item) {
       console.log(type, item);
@@ -171,7 +139,6 @@ export default {
         event.target.offsetTop - this.positions.movementY;
       item.style.position.left =
         event.target.offsetLeft - this.positions.movementX;
-      // console.log(event.target.offsetTop - this.positions.movementY, event.target.offsetLeft - this.positions.movementX);
     },
     getItemPos(itemPos) {
       return `top:${itemPos.top}px;left:${itemPos.left}px`;
