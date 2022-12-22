@@ -1,14 +1,24 @@
 <template>
   <section class="create-post">
     <div class="post-nav">
-      <h3>Pick placment</h3>
-      <button @click="move('back')">Back</button>
-      <button @click="move('next')">Next</button>
+      <h3>
+        {{ currCmp === "playlist-preview" ? "Pick placment" : "Post-preview" }}
+      </h3>
+      <button
+        v-if="currCmp === 'playlist-preview'"
+        @click="moveTo('post-preview')"
+      >
+        Next
+      </button>
+      <div v-else>
+        <button @click="moveTo('playlist-preview')">Back</button>
+      </div>
     </div>
     <component
       :playlists="playlists"
       :is="currCmp"
       :post="post"
+      :posts="posts"
       @update="updatePost"
       @getPlaylist="getPlaylist"
       @save="createPost"
@@ -26,7 +36,6 @@ export default {
   data() {
     return {
       post: postService.getNewPost(),
-      cmps: ["playlist-preview", "post-preview"],
       currCmp: "playlist-preview",
     };
   },
@@ -45,10 +54,8 @@ export default {
         this.post.style.position = newPos;
       } else return;
     },
-    move(direction) {
-      const idx = this.cmps.findIndex((cmp) => cmp === this.currCmp);
-      if (direction === "next") this.currCmp = this.cmps[idx + 1];
-      else this.currCmp = this.cmps[idx - 1];
+    moveTo(cmp) {
+      this.currCmp = cmp;
     },
     async getPlaylist() {
       try {
@@ -68,6 +75,9 @@ export default {
     playlists() {
       return this.mediaStore.playlists;
     },
+    posts(){
+      return this.mediaStore.posts
+    }
   },
 };
 </script>

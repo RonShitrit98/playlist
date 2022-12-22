@@ -23,9 +23,9 @@
         />
         <div class="txt-display" v-else>
           <p
-            :style="`font-size:${item.style.size * 10}px;color:${
-              item.style.color
-            };`"
+            :style="`font-size:${
+              ((item.style.size * 50) / postWidth) * 100
+            }px;color:${item.style.color};`"
             v-for="txt in getTxtToDisplay(item.txt)"
           >
             {{ txt }}
@@ -68,8 +68,7 @@ export default {
     return {
       isMenu: false,
       isSpotifyModal: false,
-      postHeight: null,
-      postWidth: null,
+      postRef: null,
       editingItemId: null,
       positions: {
         clientX: undefined,
@@ -136,12 +135,16 @@ export default {
       )
         return;
       item.style.position.top =
-        event.target.offsetTop - this.positions.movementY;
+        ((event.target.offsetTop - this.positions.movementY) /
+          this.postHeight) *
+        100;
       item.style.position.left =
-        event.target.offsetLeft - this.positions.movementX;
+        ((event.target.offsetLeft - this.positions.movementX) /
+          this.postWidth) *
+        100;
     },
     getItemPos(itemPos) {
-      return `top:${itemPos.top}px;left:${itemPos.left}px`;
+      return `top:${itemPos.top}%;left:${itemPos.left}%`;
     },
   },
   computed: {
@@ -156,11 +159,17 @@ export default {
       });
       return media;
     },
+    postHeight() {
+      if (!this.postRef) return;
+      return this.postRef.clientWidth / this.post.style.position.cols.length;
+    },
+    postWidth() {
+      if (!this.postRef) return;
+      return this.postRef.clientWidth;
+    },
   },
   mounted() {
-    this.postHeight =
-      this.$refs.postPrev.clientWidth / this.post.style.position.cols.length;
-    this.postWidth = this.$refs.postPrev.clientWidth;
+    this.postRef = this.$refs.postPrev;
   },
   components: { spotifyModal, mediaStyle },
 };

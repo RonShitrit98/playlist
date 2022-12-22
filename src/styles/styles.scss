@@ -10,6 +10,7 @@
 // VIEWS
 @import "views/about-view";
 @import "views/profile-view";
+@import "views/create-view";
 
 // COMPONENTS
 @import "components/main-header";
@@ -31,3 +32,4 @@
 //POST
 @import "components/post/playlist-preview";
 @import "components/post/post-preview";
+@import "components/post/create-post";

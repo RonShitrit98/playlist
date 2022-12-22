@@ -5,17 +5,17 @@
     margin: auto;
     width: 60vw;
     overflow: hidden;
-    .media-item{
+    .media-item {
       position: absolute;
+      transform: translate(-50%, -50%);
       img {
         width: 100px;
       }
     }
   }
-textarea{
-
-  // white-space: pre-wrap;
-}
+  textarea {
+    // white-space: pre-wrap;
+  }
 
   .spotify-modal {
   }

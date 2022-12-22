@@ -1,27 +1,28 @@
 .playlist-preview {
-    position: relative;
-    width: fit-content;
-  display: grid;
-  grid-template-columns: repeat(3, 100px);
+  position: relative;
   margin-bottom: 70px;
-  gap: 10px;
-  .playlist-tile {
+  .tile-container {
+    gap: 10px;
+    position: absolute;
     width: 100%;
-    height: 100px;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+  }
+  .playlist-tile {
     border: 1px solid black;
   }
 
-  .post-container{
-      position: absolute;
-      z-index: -1;
+  .post-container {
+    position: relative;
     display: grid;
     gap: 10px;
-    background-color: rgba(0, 255, 255, 0.205);
+    // background-color: rgba(0, 255, 255, 0.205);
     height: 100%;
     width: 100%;
 
-    .post-tile{
-        background-color: bisque;
+    .post-tile {
+      background-color: bisque;
     }
   }
 }

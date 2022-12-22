@@ -79,7 +79,7 @@ function getEmptyMedia(type) {
       type,
       txt: "text",
       style: {
-        size: 5,
+        size: 1,
         color: "",
         bcg: "",
         position: {

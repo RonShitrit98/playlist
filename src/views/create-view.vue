@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="create-view">
     <h1>Create {{ title }}</h1>
     <router-view />
   </section>
