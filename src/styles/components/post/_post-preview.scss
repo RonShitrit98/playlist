@@ -5,11 +5,12 @@
     margin: auto;
     width: 300px;
     overflow: hidden;
-    img {
-      width: 100px;
-    }
     .media-item{
-      position: relative;
+      background-color: aqua;
+      position: absolute;
+      img {
+        width: 100px;
+      }
     }
   }
 textarea{

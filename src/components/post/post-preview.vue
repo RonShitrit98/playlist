@@ -5,7 +5,15 @@
       ref="postPrev"
       :style="`height:${postHeight}px;`"
     >
-      <div class="media-item" v-for="item in mediaToDisplay">
+      <div
+        class="media-item"
+        v-for="item in mediaToDisplay"
+        draggable="true"
+        @dragstart="dragMouseDown($event, item)"
+        @drag="elementDrag($event, item)"
+        :style="getItemPos(item.style.position)"
+      >
+        <img :src="item.imgUrl" alt="" draggable="false" />
         <media-style
           v-if="item._id === editingItemId"
           @update="updateMedia"
@@ -58,7 +66,6 @@
           <pre>{{ item }}</pre>
         </div>
         {{ item.name }}
-        <img :src="item.imgUrl" alt="" />
       </div> -->
       <button @click="toggleMenu">Add..</button>
     </div>
@@ -94,7 +101,14 @@ export default {
       isMenu: false,
       isSpotifyModal: false,
       postHeight: null,
+      postWidth: null,
       editingItemId: null,
+      positions: {
+        clientX: undefined,
+        clientY: undefined,
+        movementX: 0,
+        movementY: 0,
+      },
     };
   },
   methods: {
@@ -116,6 +130,10 @@ export default {
     addMedia(type, item = {}) {
       if (type === "txt") {
         item = postService.getEmptyMedia("txt");
+      } else {
+        const media = postService.getEmptyMedia(type);
+        item._id = media._id;
+        item.style = media.style;
       }
       this.post.media.push(item);
     },
@@ -123,32 +141,51 @@ export default {
       console.log(id, type, item);
     },
     getTxtToDisplay(txt) {
+      if (!txt) return;
       return txt.split("\n");
     },
     editMedia(id) {
       this.editingItemId = id;
     },
-    test(ev) {
-      console.log(ev.clientX, ev.clientX);
-      console.log(ev.target.style);
-      ev.target.style.left = ev.clientX + "px";
-      ev.target.style.right = ev.clientY + "px";
+    dragMouseDown(event) {
+      this.positions.clientX = event.clientX;
+      this.positions.clientY = event.clientY;
+    },
+    elementDrag(event, item) {
+      if (event.clientX === 0 && event.clientY === 0) return;
+      this.positions.movementX = this.positions.clientX - event.clientX;
+      this.positions.movementY = this.positions.clientY - event.clientY;
+      this.positions.clientX = event.clientX;
+      this.positions.clientY = event.clientY;
+
+      if (
+        event.target.offsetTop - this.positions.movementY >
+          this.postHeight - 10 ||
+        event.target.offsetTop - this.positions.movementY < -10 ||
+        event.target.offsetLeft - this.positions.movementX >
+          this.postWidth - 10 ||
+        event.target.offsetLeft - this.positions.movementX < -10
+      )
+        return;
+      item.style.position.top =
+        event.target.offsetTop - this.positions.movementY;
+      item.style.position.left =
+        event.target.offsetLeft - this.positions.movementX;
+      // console.log(event.target.offsetTop - this.positions.movementY, event.target.offsetLeft - this.positions.movementX);
+    },
+    getItemPos(itemPos) {
+      return `top:${itemPos.top}px;left:${itemPos.left}px`;
     },
   },
   computed: {
-    getPostSize() {
-      // console.log(this.postWidth)
-    },
     mediaToDisplay() {
       const media = this.post.media.map((item) => {
         if (item.type === "txt") return item;
-        else
-          return {
-            type: item.type,
-            name: item.name,
-            imgUrl: item.images[0].url,
-            url: item.external_urls.spotify,
-          };
+        else {
+          item.imgUrl = item.images[0].url;
+          item.url = item.external_urls.spotify;
+          return item;
+        }
       });
       return media;
     },
@@ -156,6 +193,7 @@ export default {
   mounted() {
     this.postHeight =
       this.$refs.postPrev.clientWidth / this.post.style.position.cols.length;
+    this.postWidth = this.$refs.postPrev.clientWidth;
   },
   components: { spotifyModal, mediaStyle },
 };

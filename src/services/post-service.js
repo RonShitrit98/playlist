@@ -71,7 +71,23 @@ function getEmptyMedia(type) {
         size: 1,
         color: "",
         bcg: "",
+        position: {
+          top: 0,
+          left: 0,
+        },
       },
     };
-  }
+  } else
+    return {
+      _id: utilService.makeId(),
+      style: {
+        size: 1,
+        color: "",
+        bcg: "",
+        position: {
+          top: 0,
+          left: 0,
+        },
+      },
+    };
 }
