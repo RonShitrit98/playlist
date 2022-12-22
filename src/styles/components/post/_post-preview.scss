@@ -6,17 +6,21 @@
     width: 60vw;
     overflow: hidden;
     .media-item {
+      // width: 100%;
       position: absolute;
       transform: translate(-50%, -50%);
       img {
         width: 100px;
       }
+      textarea {
+        width: auto;
+        max-width: 100%;
+        // background-color: transparent;
+        border: none;
+        &:focus{
+            outline: none;
+        }
+      }
     }
-  }
-  textarea {
-    // white-space: pre-wrap;
-  }
-
-  .spotify-modal {
   }
 }
