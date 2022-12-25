@@ -19,6 +19,7 @@
       class="post-container"
       ref="postPrev"
       :style="`height:${postHeight}px;background-color:${post.style.bcg}`"
+      @click="editingItemId = null"
     >
       <div
         class="media-item"
@@ -27,9 +28,9 @@
         @dragstart="dragMouseDown($event, item)"
         @drag="elementDrag($event, item)"
         :style="getItemPos(item.style.position)"
-        @click="editMedia(item._id)"
+        @click.stop="editMedia(item._id)"
       >
-        <img :src="item.imgUrl" alt="" draggable="false" />
+        <img v-if="item.imgUrl" :src="item.imgUrl" alt="" draggable="false" />
         <media-style
           v-if="item._id === editingItemId"
           @update="updateMedia"

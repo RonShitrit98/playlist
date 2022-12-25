@@ -16,21 +16,23 @@
     width: 60vw;
     overflow: hidden;
     .media-item {
-      // width: 100%;
       position: absolute;
-      transform: translate(-50%, -50%);
+      top: 0;
+      left: 0;
+      height: fit-content;
+
+      p{
+        white-space: nowrap;
+        font-family: 'Times New Roman', Times, serif;
+      }
+      width: fit-content;
+      // transform: translate(-50%, -50%);
+      // top: 50%;
+      // left: 50%;
       img {
         width: 100px;
       }
-      textarea {
-        width: auto;
-        max-width: 100%;
-        // background-color: transparent;
-        border: none;
-        &:focus {
-          outline: none;
-        }
-      }
+     
     }
   }
 }

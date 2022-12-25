@@ -1,5 +1,42 @@
 .media-style {
+  height: inherit;
   position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  .style-bar {
+    textarea {
+      resize: none;
+      background-color: transparent;
+      padding: 0px;
+      font-family: "Times New Roman", Times, serif;
+      border: none;
+      &:focus{
+        outline: none;
+        padding: 0;
+      }
+    }
 
-
+    .btns {
+      width: 100%;
+      display: flex;
+      position: relative;
+      top: 10px;
+      gap: 10px;
+      &>*{
+        background-color: azure;
+        border: none;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        font-size: 20px;
+      }
+    }
+    .color-input {
+      visibility: hidden;
+      width: 0;
+      height: 0;
+    }
+  }
 }

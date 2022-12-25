@@ -1,8 +1,9 @@
 <template>
   <div :class="['media-style', media._id]" @click.stop>
-    <div class="txt-style">
+    <div class="style-bar">
       <textarea
-        @click.stop
+        v-if="media.type === 'txt'"
+        ref="txt"
         :cols="getCols"
         :rows="getRows"
         :style="`font-size:${
@@ -10,9 +11,19 @@
         }px;color:${media.style.color};`"
         v-model="media.txt"
       ></textarea>
-      <button @click="changeSize(1)">+</button>
-      <button @click="changeSize(-1)">-</button>
-      <input type="color" v-model="media.style.color" />
+      <div class="btns">
+        <button @click="changeSize(1)">+</button>
+        <button @click="changeSize(-1)">-</button>
+        <div>
+          <label for="clr">#</label>
+          <input
+            class="color-input"
+            type="color"
+            id="clr"
+            v-model="media.style.color"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -25,7 +36,7 @@ export default {
       reqired: true,
     },
     postWidth: {
-      type: String,
+      type: Number,
       reqired: true,
     },
   },
@@ -54,14 +65,20 @@ export default {
       const longest = txt.sort(function (a, b) {
         return b.length - a.length;
       })[0];
-      console.log(longest);
-      return longest.length;
+      console.log(longest.length.toString(), 1);
+      return longest.length.toString();
     },
     getRows() {
       if (!this.media.txt) return "1";
       const txt = this.media.txt.split("\n");
-      return txt.length;
+      console.log(txt.length);
+      return txt.length.toString();
     },
+  },
+  mounted() {
+    if (this.media.type === "txt") {
+      this.$refs.txt.focus();
+    }
   },
 };
 </script>
