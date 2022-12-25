@@ -34,17 +34,8 @@
           v-if="item._id === editingItemId"
           @update="updateMedia"
           :media="item"
+          :postWidth="postWidth"
         />
-        <textarea
-          @click.stop
-          :cols="getTxtToDisplay(item.txt)[0].length"
-          :rows="getTxtToDisplay(item.txt).length"
-          :style="`font-size:${
-            ((item.style.size * 50) / postWidth) * 100
-          }px;color:${item.style.color};`"
-          v-if="item._id === editingItemId"
-          v-model="item.txt"
-        ></textarea>
         <div class="txt-display" v-else>
           <p
             :style="`font-size:${
