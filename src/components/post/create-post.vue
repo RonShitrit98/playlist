@@ -6,7 +6,7 @@
       </h3>
       <button
         v-if="currCmp === 'playlist-preview'"
-        @click="moveTo('post-preview')"
+        @click="moveTo('post-edit')"
       >
         Next
       </button>
@@ -30,9 +30,9 @@
 import { useMediaStore } from "../../stores/media.store";
 import { postService } from "../../services/post-service";
 import playlistPreview from "./playlist-preview.vue";
-import postPreview from "./post-preview.vue";
+import postEdit from "./post-edit.vue";
 export default {
-  components: { playlistPreview, postPreview },
+  components: { playlistPreview, postEdit },
   data() {
     return {
       post: postService.getNewPost(),

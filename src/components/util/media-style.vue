@@ -6,14 +6,14 @@
         ref="txt"
         :cols="getCols"
         :rows="getRows"
-        :style="`font-size:${
-          ((media.style.size * 50) / postWidth) * 100
-        }px;color:${media.style.color};`"
+        :style="`font-size:${media.style.size * postWidth}px;color:${
+          media.style.color
+        };`"
         v-model="media.txt"
       ></textarea>
       <div class="btns">
-        <button @click="changeSize(1)">+</button>
-        <button @click="changeSize(-1)">-</button>
+        <button @click="changeSize(0.02)">+</button>
+        <button @click="changeSize(-0.02)">-</button>
         <div>
           <label for="clr">#</label>
           <input
