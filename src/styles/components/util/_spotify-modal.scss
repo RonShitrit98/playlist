@@ -1,16 +1,86 @@
 .spotify-modal {
   position: absolute;
+  z-index: 1;
   background-color: gainsboro;
-  max-width: 350px;
-  max-height: 50vh;
-  overflow: scroll;
+  height: 600px;
+  max-width: 600px;
+  overflow: none;
+  transform: translateX(-50%);
+  top: 35px;
+  left: 50%;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  .playlist-display {
+    position: relative;
+    // overflow-y: auto;
+    width: fit-content;
+
+    .title {
+      min-width: 150px;
+      display: flex;
+      justify-content: space-between;
+    }
+    padding: 10px;
+  }
   .spotify-search {
+    height: inherit;
+    position: relative;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    // gap: 10px;
+    width: 400px;
+    // overflow: hidden;
+    .search-bar {
+      .res-btn {
+        background-color: aliceblue;
+        border: none;
+        height: 40px;
+        &.selected {
+          overflow: hidden;
+          position: relative;
+          &:before {
+            position: absolute;
+            content: "";
+            z-index: 1;
+            width: 30px;
+            height: 30px;
+            transform: translate(-50%, -50%);
+            top: 100%;
+            left: 50%;
+            background-image: linear-gradient(
+                to bottom right,
+                transparent 14px,
+                black 14px,
+                black 15px,
+                aliceblue 0
+              ),
+              linear-gradient(
+                to top right,
+                aliceblue 14px,
+                black 14px,
+                black 15px,
+                transparent 0
+              );
+            background-repeat: no-repeat;
+            background-size: 50% 100%;
+            background-position: left, right;
+          }
+        }
+      }
+    }
     .search-res {
+      position: relative;
+      border: 1px solid black;
       display: flex;
       flex-wrap: wrap;
+      justify-content: space-between;
+      background-color: aliceblue;
+      padding: 10px;
+      overflow-y: auto;
+      top: -1px;
       .media-display {
         width: 100px;
-        border: 1px solid black;
         img {
           padding: 10px;
           width: 100%;

@@ -1,4 +1,14 @@
 .post-preview {
+  .media-bar {
+    background-color: aqua;
+    height: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    .btn.spotify {
+      position: relative;
+    }
+  }
   .post-container {
     position: relative;
     background-color: grey;
@@ -17,8 +27,8 @@
         max-width: 100%;
         // background-color: transparent;
         border: none;
-        &:focus{
-            outline: none;
+        &:focus {
+          outline: none;
         }
       }
     }

@@ -1,21 +1,35 @@
 <template>
   <div class="spotify-modal">
-    <h1>Spotify-modal</h1>
-    <div class="playlist-display">
-      <h4
-        v-for="playlist in playlists"
-        :key="playlist.name"
-        @click="selectItem(playlist)"
-      >
-        {{ playlist.name }}
-      </h4>
+    <div :class="['playlist-display', isPlaylists ? 'show' : 'hide']">
+      <div v-if="isPlaylists" class="title">
+        <h3>Playlists</h3>
+        <button @click="isPlaylists = false">{{ "<" }}</button>
+      </div>
+      <button v-else @click="isPlaylists = true">{{ ">" }}</button>
+      <div v-if="isPlaylists">
+        <h4
+          v-for="playlist in playlists"
+          :key="playlist.name"
+          @click="selectItem(playlist)"
+        >
+          {{ playlist.name }}
+        </h4>
+      </div>
     </div>
     <div class="spotify-search">
-      <h3>Search</h3>
-      <input type="text" v-model="searchVal" @input="search" />
-      <button v-for="opt in resOpts" @click="type = opt">
-        {{ opt.charAt(0).toUpperCase() + opt.slice(1).toLowerCase() }}
-      </button>
+      <div class="search-bar">
+        <h3>Search</h3>
+        <input type="text" v-model="searchVal" @input="search" />
+        <div class="type-bar">
+          <button
+            v-for="opt in resOpts"
+            @click="type = opt"
+            :class="['res-btn', opt === type ? 'selected' : '']"
+          >
+            {{ opt.charAt(0).toUpperCase() + opt.slice(1).toLowerCase() }}
+          </button>
+        </div>
+      </div>
       <div class="search-res">
         <div
           class="media-display"
@@ -46,6 +60,7 @@ export default {
       searchVal: null,
       type: "artist",
       resOpts: ["artist", "album", "track", "playlist"],
+      isPlaylists: true,
     };
   },
   methods: {

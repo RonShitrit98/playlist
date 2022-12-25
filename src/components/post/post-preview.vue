@@ -1,6 +1,20 @@
 <template>
   <div class="post-preview">
     <button @click="savePost">Save</button>
+    <div class="media-bar">
+      <!-- <button @click="toggleMenu">+</button> -->
+      <input type="color" v-model="post.style.bcg" />
+      <button @click="addMedia('txt')">T</button>
+      <div class="btn spotify">
+        <button @click="toggleSpotifyModal">Spotify</button>
+        <spotify-modal v-if="isSpotifyModal" @selectMedia="addMedia" />
+      </div>
+      <!-- <div v-if="isMenu" class="prev-menu"> -->
+      <!-- <ul> -->
+      <!-- <li @click="addMedia('img')">Image</li> -->
+      <!-- </ul> -->
+      <!-- </div> -->
+    </div>
     <div
       class="post-container"
       ref="postPrev"
@@ -21,10 +35,10 @@
           @update="updateMedia"
           :media="item"
         />
-        <textarea 
-        @click.stop
-        :cols="getTxtToDisplay(item.txt)[0].length"
-        :rows="getTxtToDisplay(item.txt).length"
+        <textarea
+          @click.stop
+          :cols="getTxtToDisplay(item.txt)[0].length"
+          :rows="getTxtToDisplay(item.txt).length"
           :style="`font-size:${
             ((item.style.size * 50) / postWidth) * 100
           }px;color:${item.style.color};`"
@@ -42,18 +56,6 @@
           </p>
         </div>
       </div>
-      <button @click="toggleMenu">Add..</button>
-    </div>
-    <div v-if="isMenu" class="prev-menu">
-      <ul>
-        <li @click="addMedia('txt')">Text</li>
-        <li @click="toggleSpotifyModal">Spotify</li>
-        <!-- <li @click="addMedia('img')">Image</li> -->
-      </ul>
-      <spotify-modal v-if="isSpotifyModal" @selectMedia="addMedia" />
-    </div>
-    <div class="style-modal">
-      <input type="color" v-model="post.style.bcg" />
     </div>
     <button @click="getPlaylists">Add Playlist</button>
   </div>
@@ -99,6 +101,7 @@ export default {
       this.isMenu = !this.isMenu;
     },
     toggleSpotifyModal() {
+      console.log("blip");
       this.isSpotifyModal = !this.isSpotifyModal;
     },
     getPlaylists() {
