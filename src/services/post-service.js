@@ -92,7 +92,7 @@ function getEmptyMedia(type) {
     return {
       _id: utilService.makeId(),
       style: {
-        size: 5,
+        size: 0.1,
         color: "",
         bcg: "",
         position: {

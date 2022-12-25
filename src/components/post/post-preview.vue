@@ -1,17 +1,30 @@
 <template>
   <div class="post-preview" ref="post">
     <div
+      v-if="postWidth"
       ref="media"
       class="media-item"
       v-for="media in post.media"
       :key="media.id"
-      :style="`font-size:${media.style.size * postWidth}px; color:${
-        media.style.color
-      };`"
+      :style="`top:${media.style.position.top}%;left:${media.style.position.left}%`"
     >
-      <p v-for="txt in getTxtToDisplay(media.txt)" :key="txt">
+      <p
+        v-for="txt in getTxtToDisplay(media.txt)"
+        :key="txt"
+        :style="`font-size:${media.style.size * postWidth}px; color:${
+          media.style.color
+        };`"
+      >
         {{ txt }}
       </p>
+      <a :href="media.url" v-if="media.imgUrl">
+        <img
+          :src="media.imgUrl"
+          :style="`width:${media.style.size * postWidth}px;height:${
+            media.style.size * postWidth
+          }px;`"
+        />
+      </a>
     </div>
   </div>
 </template>
@@ -25,7 +38,6 @@ export default {
     },
     data() {
       return {
-        postRef: this.$refs.post,
         postWidth: null,
       };
     },
@@ -40,11 +52,6 @@ export default {
       console.log(this.postWidth);
       return;
     },
-  },
-  created() {
-    this.$watch("postWidth", (newQuestion) => {
-      console.log("werljhewrkwjerh");
-    });
   },
   computed: {
     // postHeight() {

@@ -24,7 +24,15 @@
         :style="getItemPos(item.style.position)"
         @click.stop="editMedia(item._id)"
       >
-        <img v-if="item.imgUrl" :src="item.imgUrl" alt="" draggable="false" />
+        <img
+          v-if="item.imgUrl"
+          :src="item.imgUrl"
+          alt=""
+          draggable="false"
+          :style="`width:${item.style.size * postWidth}px;height:${
+            item.style.size * postWidth
+          }px;`"
+        />
         <media-style
           v-if="item._id === editingItemId"
           @update="updateMedia"
